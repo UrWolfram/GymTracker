@@ -11,20 +11,25 @@ import java.lang.constant.ModuleDesc;
 @Component
 public class TrainingMapperImpl implements Mapper<TrainingEntity, TrainingDto> {
 
-    private ModelMapper modelMapper;
+    @Override
+    public TrainingDto mapTo(TrainingEntity entity) {
+        TrainingDto dto = new TrainingDto();
 
-    public TrainingMapperImpl(ModelMapper modelMapper){
-        this.modelMapper = modelMapper;
+        dto.setUserId(entity.getUser().getId());
+        dto.setExerciseId(entity.getExercise().getId());
+        dto.setWeight(entity.getWeight());
+        dto.setReps(entity.getReps());
+
+        return dto;
     }
 
     @Override
-    public TrainingDto mapTo(TrainingEntity trainingEntity) {
-        return modelMapper.map(trainingEntity, TrainingDto.class);
-    }
+    public TrainingEntity mapFrom(TrainingDto dto) {
+        TrainingEntity entity = new TrainingEntity();
 
-    @Override
-    public TrainingEntity mapFrom(TrainingDto trainingDto) {
-        return modelMapper.map(trainingDto, TrainingEntity.class);
+        entity.setWeight(dto.getWeight());
+        entity.setReps(dto.getReps());
 
+        return entity;
     }
 }

@@ -11,6 +11,8 @@ import com.urwolfram.GymTracker.services.TrainingService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 public class TrainingServiceImpl implements TrainingService {
@@ -36,5 +38,10 @@ public class TrainingServiceImpl implements TrainingService {
         trainingEntity.setExercise(exercise);
         trainingEntity.setDate(LocalDateTime.now());
         return trainingRepository.save(trainingEntity);
+    }
+
+    @Override
+    public List<TrainingEntity> getTrainingsByUserId(Integer userId) {
+        return trainingRepository.findByUserId(userId);
     }
 }
